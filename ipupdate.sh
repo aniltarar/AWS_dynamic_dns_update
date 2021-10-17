@@ -13,7 +13,6 @@ IP=$(curl http://checkip.amazonaws.com/)
 if [[ ! $IP =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
 	exit 1
 fi
-
 #get current
 aws route53 list-resource-record-sets --hosted-zone-id $HOSTED_ZONE_ID | \
 jq -r '.ResourceRecordSets[] | select (.Name == "'"$NAME"'") | select (.Type == "'"$TYPE"'") | .ResourceRecords[0].Value' >/tmp/route53_changes.json
